@@ -10,8 +10,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.InvalidObjectException;
 import java.net.URI;
-import java.sql.Date;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -30,22 +28,27 @@ public class PatientAPIController {
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public PatientEntity get(@PathVariable int id) {
-        return ps.findPatient(id);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> delete(@PathVariable int id) throws Exception {
+    public ResponseEntity<PatientEntity> get(@PathVariable int id) {
         try {
-            ps.delete(id);
-            return ResponseEntity.ok(null);
-        }catch (Exception e) {
+            PatientEntity p = ps.findPatient(id);
+            return ResponseEntity.ok(p);
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping(value = "" , consumes = "application/json")
-    public ResponseEntity<PatientEntity> add (@RequestBody PatientEntity p) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Object> delete(@PathVariable int id) {
+        try {
+            ps.delete(id);
+            return ResponseEntity.ok(null);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping(value = "", consumes = "application/json")
+    public ResponseEntity<PatientEntity> add(@RequestBody PatientEntity p) {
         try {
             ps.addPatient(p);
             //création de l'url d'accès au nouvel objet => http://localhost:8080/patient/{id}
@@ -53,7 +56,7 @@ public class PatientAPIController {
             return ResponseEntity.created(uri).body(p);
 
         } catch (InvalidObjectException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST , e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
