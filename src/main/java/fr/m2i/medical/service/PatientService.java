@@ -4,12 +4,10 @@ import fr.m2i.medical.entities.PatientEntity;
 import fr.m2i.medical.entities.VilleEntity;
 import fr.m2i.medical.repositories.VilleRepository;
 import fr.m2i.medical.repositories.PatientRepository;
-import fr.m2i.medical.repositories.VilleRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.InvalidObjectException;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class PatientService {
@@ -69,8 +67,9 @@ public class PatientService {
             pExistant.setNom(p.getNom());
             pExistant.setPrenom(p.getPrenom());
             pExistant.setAdresse(p.getAdresse());
-            pExistant.setDatenaissance(p.getDatenaissance());
+            pExistant.setDateNaissance(p.getDateNaissance());
             pExistant.setVille(p.getVille());
+            pExistant.setTelephone(p.getTelephone());
 
             pr.save(pExistant);
 

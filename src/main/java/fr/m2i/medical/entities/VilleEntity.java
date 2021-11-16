@@ -12,10 +12,20 @@ public class VilleEntity {
     private String pays;
 
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "VilleEntity{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", codePostal=" + codePostal +
+                ", pays='" + pays + '\'' +
+                '}';
     }
 
     public void setId(int id) {
@@ -58,16 +68,6 @@ public class VilleEntity {
         if (o == null || getClass() != o.getClass()) return false;
         VilleEntity that = (VilleEntity) o;
         return id == that.id && codePostal == that.codePostal && Objects.equals(nom, that.nom) && Objects.equals(pays, that.pays);
-    }
-
-    @Override
-    public String toString() {
-        return "VilleEntity{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", codePostal=" + codePostal +
-                ", pays='" + pays + '\'' +
-                '}';
     }
 
     @Override

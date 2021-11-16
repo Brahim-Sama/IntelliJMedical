@@ -45,7 +45,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "roles", nullable = false, length = 100)
+    @Column(name = "roles", nullable = false, length = -1)
     public String getRoles() {
         return roles;
     }

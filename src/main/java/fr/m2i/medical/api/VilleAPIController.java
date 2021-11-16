@@ -1,10 +1,7 @@
 package fr.m2i.medical.api;
 
-import fr.m2i.medical.entities.PatientEntity;
 import fr.m2i.medical.entities.VilleEntity;
 import fr.m2i.medical.service.VilleService;
-import javassist.NotFoundException;
-import org.hibernate.annotations.NotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +10,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.InvalidObjectException;
 import java.net.URI;
-import java.sql.Date;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController

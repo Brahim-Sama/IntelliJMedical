@@ -2,7 +2,6 @@ package fr.m2i.medical.service;
 
 import fr.m2i.medical.entities.VilleEntity;
 import fr.m2i.medical.repositories.VilleRepository;
-import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.InvalidObjectException;
