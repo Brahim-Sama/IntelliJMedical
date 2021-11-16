@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.InvalidObjectException;
 import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class VilleService {
@@ -30,6 +32,7 @@ public class VilleService {
 
     }
 
+
     public VilleEntity findVille(int id) {
         return vr.findById(id).get();
     }
@@ -53,7 +56,7 @@ public class VilleService {
             vExistante.setPays(v.getPays());
 
             vr.save(vExistante);
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw e;
         }
 

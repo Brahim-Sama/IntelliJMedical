@@ -66,13 +66,20 @@ public class VilleAPIController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> delete(@PathVariable int id) throws Exception {
+    public ResponseEntity<Object> delete(@PathVariable int id) {
+        // Check sur l'existance de la ville, si ko => 404 not found
         try {
-            vs.delete(id);
-            return ResponseEntity.ok(null);
+            VilleEntity v = vs.findVille(id);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
 
+        // si on a un problème à ce niveau => sql exception
+        try {
+            vs.delete(id);
+            return ResponseEntity.ok(null);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

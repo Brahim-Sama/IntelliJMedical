@@ -12,11 +12,12 @@ public class PatientEntity {
     private String prenom;
     private Date dateNaissance;
     private String adresse;
+    private String email;
     private String telephone;
     private VilleEntity ville;
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
@@ -34,6 +35,7 @@ public class PatientEntity {
                 ", prenom='" + prenom + '\'' +
                 ", dateNaissance=" + dateNaissance +
                 ", adresse='" + adresse + '\'' +
+                ", email='" + email + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", ville=" + ville +
                 '}';
@@ -110,5 +112,13 @@ public class PatientEntity {
 
     public void setVille(VilleEntity ville) {
         this.ville = ville;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
