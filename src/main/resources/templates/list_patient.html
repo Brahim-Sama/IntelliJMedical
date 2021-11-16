@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="fr" >
+<head class="mb-5" th:include="~{ fragments/head::#head }"></head>
+<body>
+
+<header class="mb-5" th:include="~{ fragments/header::#header }"></header>
+
+<main class="container">
+    <h1>Liste des patients</h1>
+
+    <a href="/patient/add" class="btn btn-primary">Ajouter un patient</a>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom & prénom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Ville / Pays</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="patient : ${ patients }">
+            <td th:text="${ patient.prenom } + ' ' + ${ patient.nom }"></td>
+            <td th:text="${ patient.email }"></td>
+            <td th:text="${ patient.telephone }"></td>
+            <td th:text="${ patient.ville?.nom } +'  - ' + ${ patient.ville?.pays }"></td>
+            <td>
+                <a class="btn btn-secondary btn-sm" href="edit?id="><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                <button class="btn btn-danger btn-sm" onclick="supprimer()"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:include="~{ fragments/footer::#footer }"></footer>
+
+</body>
+</html>

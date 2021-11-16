@@ -11,34 +11,34 @@ public class PatientEntity {
     private String nom;
     private String prenom;
     private Date dateNaissance;
-    private String adresse;
     private String email;
     private String telephone;
+    private String adresse;
     private VilleEntity ville;
 
+    public PatientEntity() {
+    }
+
+    public PatientEntity(int id, String nom, String prenom, Date dateNaissance, String email, String telephone, String adresse, VilleEntity ville) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.email = email;
+        this.telephone = telephone;
+        this.adresse = adresse;
+        this.ville = ville;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "PatientEntity{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", dateNaissance=" + dateNaissance +
-                ", adresse='" + adresse + '\'' +
-                ", email='" + email + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", ville=" + ville +
-                '}';
     }
 
     @Basic
@@ -72,6 +72,26 @@ public class PatientEntity {
     }
 
     @Basic
+    @Column(name = "email", nullable = false, length = 100)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Basic
+    @Column(name = "telephone", nullable = false, length = 20)
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    @Basic
     @Column(name = "adresse", nullable = false, length = 100)
     public String getAdresse() {
         return adresse;
@@ -81,27 +101,17 @@ public class PatientEntity {
         this.adresse = adresse;
     }
 
-    @Basic
-    @Column(name = "telephone", nullable = true, length = 100)
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PatientEntity that = (PatientEntity) o;
-        return id == that.id && Objects.equals(nom, that.nom) && Objects.equals(prenom, that.prenom) && Objects.equals(dateNaissance, that.dateNaissance) && Objects.equals(adresse, that.adresse) && Objects.equals(telephone, that.telephone);
+        return id == that.id && Objects.equals(nom, that.nom) && Objects.equals(prenom, that.prenom) && Objects.equals(dateNaissance, that.dateNaissance) && Objects.equals(email, that.email) && Objects.equals(telephone, that.telephone) && Objects.equals(adresse, that.adresse);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nom, prenom, dateNaissance, adresse, telephone);
+        return Objects.hash(id, nom, prenom, dateNaissance, email, telephone, adresse);
     }
 
     @OneToOne
@@ -112,13 +122,5 @@ public class PatientEntity {
 
     public void setVille(VilleEntity ville) {
         this.ville = ville;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

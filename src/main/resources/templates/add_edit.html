@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="fr">
+<head class="mb-5" th:include="~{ fragments/head::#head }"></head>
+<body>
+<header class="mb-5" th:include="~{ fragments/header::#header }"></header>
+
+<main class="container">
+    <h1>Formulaire d'inscription</h1>
+    <hr>
+    <form name="monForm" action="" method="post">
+        <div class="form-line mb-4">
+            <label class="form-label">Nom *</label>
+            <input class="form-control" type="text" name="nom" placeholder="Votre nom" required>
+        </div>
+        <div class="form-line mb-4">
+            <label>Prénom *</label>
+            <input class="form-control" type="text" name="prenom" placeholder="Votre prénom" required>
+        </div>
+
+        <div class="form-line mb-4">
+            <label class="form-label">Date de naissance *</label>
+            <input class="form-control" type="date" name="naissance" placeholder="dd/mm/yyyy" required>
+        </div>
+
+        <div class="form-line mb-4">
+            <label class="form-label">Adresse *</label>
+            <input class="form-control" type="text" name="adresse" placeholder="Votre adresse" required>
+        </div>
+
+        <div class="form-line mb-4">
+            <label class="form-label">Email *</label>
+            <input class="form-control" type="email" name="email" placeholder="Votre email" required>
+        </div>
+
+        <div class="form-line mb-4">
+            <label class="form-label">Téléphone *</label>
+            <input class="form-control" type="text" name="telephone" placeholder="Votre numéro de téléphone" required>
+        </div>
+
+
+        <div class="form-line mb-4">
+            <label class="form-label">Ville *</label>
+            <div id="cities-content">
+                <select class="form-select" name="ville" required id="ville">
+                    <option value="">Sélectionner une ville</option>
+                    <option th:each="ville : ${villes}" th:value="${ville.id}"
+                            th:utext="${ville.nom}" ></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-line mb-4">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+
+    </form>
+
+</main>
+
+<footer th:include="~{ fragments/footer::#footer }"></footer>
+
+</body>
+</html>
