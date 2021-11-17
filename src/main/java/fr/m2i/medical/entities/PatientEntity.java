@@ -115,7 +115,7 @@ public class PatientEntity {
     }
 
     @OneToOne
-    @JoinColumn(name = "ville", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "ville", referencedColumnName = "id", nullable = true)
     public VilleEntity getVille() {
         return ville;
     }

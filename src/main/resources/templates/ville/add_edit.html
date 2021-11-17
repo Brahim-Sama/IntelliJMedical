@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="fr">
+<head class="mb-5" th:include="~{ fragments/head::#head }"></head>
+<body>
+<header class="mb-5" th:include="~{ fragments/header::#header }"></header>
+
+<main class="container">
+    <h1 th:if="${ ville.id == 0 }">Ajouter une ville</h1>
+    <h1 th:if="${ ville.id != 0 }">Editer une ville</h1>
+    <hr>
+
+    <div class="alert alert-danger" role="alert" th:if="${error != null && error.length() > 0}" th:text="${error}">
+    </div>
+
+    <form name="monForm" action="" method="post">
+        <div class="form-line mb-4">
+            <label class="form-label">Nom *</label>
+            <input class="form-control" minlength="2" type="text" name="nom" placeholder="Nom de la ville" required th:value="${ville.nom}">
+        </div>
+        <div class="form-line mb-4">
+            <label>Code postal *</label>
+            <input class="form-control" type="text" name="codePostal" placeholder="Code Postal" required th:value="${ville.codePostal}">
+        </div>
+
+        <div class="form-line mb-4">
+            <label class="form-label">Pays *</label>
+            <input class="form-control" type="text" name="pays" placeholder="Pays" required th:value="${ville.pays}">
+        </div>
+
+        <div class="form-line mb-4">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+
+    </form>
+
+</main>
+
+<footer th:include="~{ fragments/footer::#footer }"></footer>
+
+</body>
+</html>

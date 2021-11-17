@@ -13,6 +13,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Id</th>
             <th>Nom & prénom</th>
             <th>Email</th>
             <th>Téléphone</th>
@@ -23,13 +24,14 @@
 
         <tbody>
         <tr th:each="patient : ${ patients }">
+            <td th:text="${ patient.id }"></td>
             <td th:text="${ patient.prenom } + ' ' + ${ patient.nom }"></td>
             <td th:text="${ patient.email }"></td>
             <td th:text="${ patient.telephone }"></td>
             <td th:text="${ patient.ville?.nom } +'  - ' + ${ patient.ville?.pays }"></td>
             <td>
-                <a class="btn btn-secondary btn-sm" href="edit?id="><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                <button class="btn btn-danger btn-sm" onclick="supprimer()"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                <a class="btn btn-secondary btn-sm" th:href="@{'/patient/edit/' + ${ patient.id } }"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                <button class="btn btn-danger btn-sm"  th:onclick="|supprimer( 'patient' , ${patient.id} )|"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
             </td>
         </tr>
         </tbody>

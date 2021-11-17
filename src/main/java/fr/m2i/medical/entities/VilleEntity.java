@@ -11,21 +11,20 @@ public class VilleEntity {
     private int codePostal;
     private String pays;
 
-    @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
+    public VilleEntity(String nom, int codePostal, String pays) {
+        this.nom = nom;
+        this.codePostal = codePostal;
+        this.pays = pays;
     }
 
-    @Override
-    public String toString() {
-        return "VilleEntity{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", codePostal=" + codePostal +
-                ", pays='" + pays + '\'' +
-                '}';
+    public VilleEntity() {
+    }
+
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {

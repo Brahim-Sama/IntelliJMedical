@@ -5,36 +5,37 @@
 <header class="mb-5" th:include="~{ fragments/header::#header }"></header>
 
 <main class="container">
-    <h1>Formulaire d'inscription</h1>
+    <h1 th:if="${ patient.id == 0 }">Ajouter un patient</h1>
+    <h1 th:if="${ patient.id > 0 }">Editer un patient</h1>
     <hr>
     <form name="monForm" action="" method="post">
         <div class="form-line mb-4">
             <label class="form-label">Nom *</label>
-            <input class="form-control" type="text" name="nom" placeholder="Votre nom" required>
+            <input class="form-control" type="text" name="nom" placeholder="Votre nom" required th:value="${patient.nom}">
         </div>
         <div class="form-line mb-4">
             <label>Prénom *</label>
-            <input class="form-control" type="text" name="prenom" placeholder="Votre prénom" required>
+            <input class="form-control" type="text" name="prenom" placeholder="Votre prénom" required th:value="${patient.prenom}">
         </div>
 
         <div class="form-line mb-4">
             <label class="form-label">Date de naissance *</label>
-            <input class="form-control" type="date" name="naissance" placeholder="dd/mm/yyyy" required>
+            <input class="form-control" type="date" name="naissance" placeholder="dd/mm/yyyy" required th:value="${patient.dateNaissance}">
         </div>
 
         <div class="form-line mb-4">
             <label class="form-label">Adresse *</label>
-            <input class="form-control" type="text" name="adresse" placeholder="Votre adresse" required>
+            <input class="form-control" type="text" name="adresse" placeholder="Votre adresse" required th:value="${patient.adresse}">
         </div>
 
         <div class="form-line mb-4">
             <label class="form-label">Email *</label>
-            <input class="form-control" type="email" name="email" placeholder="Votre email" required>
+            <input class="form-control" type="email" name="email" placeholder="Votre email" required th:value="${patient.email}">
         </div>
 
         <div class="form-line mb-4">
             <label class="form-label">Téléphone *</label>
-            <input class="form-control" type="text" name="telephone" placeholder="Votre numéro de téléphone" required>
+            <input class="form-control" type="text" name="telephone" placeholder="Votre numéro de téléphone" required th:value="${patient.telephone}">
         </div>
 
 
@@ -44,7 +45,7 @@
                 <select class="form-select" name="ville" required id="ville">
                     <option value="">Sélectionner une ville</option>
                     <option th:each="ville : ${villes}" th:value="${ville.id}"
-                            th:utext="${ville.nom}" ></option>
+                            th:utext="${ville.nom}" th:selected="${ ville.id == patient.ville?.id }" ></option>
                 </select>
             </div>
         </div>

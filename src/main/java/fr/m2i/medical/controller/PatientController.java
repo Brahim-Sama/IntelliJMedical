@@ -27,14 +27,15 @@ public class PatientController {
     @GetMapping(value = "")
     public String list( Model model ){
         model.addAttribute("patients" , ps.findAll() );
-        return "list_patient";
+        return "patient/list_patient";
     }
 
     // http://localhost:8080/patient/add
     @GetMapping(value = "/add")
     public String add( Model model ){
         model.addAttribute("villes" , vservice.findAll() );
-        return "add_edit";
+        model.addAttribute("patient" , new PatientEntity() );
+        return "patient/add_edit";
     }
 
     @PostMapping(value = "/add")
@@ -65,14 +66,39 @@ public class PatientController {
     @GetMapping(value = "/edit/{id}")
     public String edit( Model model , @PathVariable int id ){
         model.addAttribute("villes" , vservice.findAll() );
-        //... récupérer le patient à modifier et le passer à la vue
-        return "add_edit";
+        model.addAttribute("patient" , ps.findPatient( id ) );
+        return "patient/add_edit";
     }
 
     @PostMapping(value = "/edit/{id}")
-    public String editPost( Model model , @PathVariable int id ){
-        //... récupérer le patient envoyé depuis le form et enregistrer en bd
-        return "add_edit";
+    public String editPost( HttpServletRequest request , @PathVariable int id ){
+        // Récupération des paramètres envoyés en POST
+        String nom = request.getParameter("nom");
+        String prenom = request.getParameter("prenom");
+        String naissance = request.getParameter("naissance");
+        String adresse = request.getParameter("adresse");
+        String email = request.getParameter("email");
+        String telephone = request.getParameter("telephone");
+        int ville = Integer.parseInt(request.getParameter("ville"));
+
+        // Préparation de l'entité à sauvegarder
+        VilleEntity v = new VilleEntity();
+        v.setId(ville);
+        PatientEntity p = new PatientEntity( 0 , nom , prenom , Date.valueOf( naissance ) , email , telephone , adresse , v );
+
+        // Enregistrement en utilisant la couche service qui gère déjà nos contraintes
+        try{
+            ps.editPatient( id , p );
+        }catch( Exception e ){
+            System.out.println( e.getMessage() );
+        }
+        return "redirect:/patient";
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    public String delete( @PathVariable int id ){
+        ps.delete(id);
+        return "redirect:/patient";
     }
 
     public PatientService getPs() {
