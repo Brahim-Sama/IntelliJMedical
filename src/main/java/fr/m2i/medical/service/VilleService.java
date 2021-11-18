@@ -25,7 +25,10 @@ public class VilleService {
     }
 
     public Iterable<VilleEntity> findAll(  String search ) {
-        return vr.findByNomContains(search);
+        if ( search != null && search.length() > 0){
+            return vr.findByNomContains(search);
+        }
+        return vr.findAll();
     }
 
     private void checkVille( VilleEntity v ) throws InvalidObjectException {

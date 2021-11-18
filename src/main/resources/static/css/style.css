@@ -1,0 +1,10 @@
+body {
+    padding-bottom: 50px
+}
+
+.alert {
+    position: fixed;
+    width: 25%;
+    left: 35%;
+    text-align: center;
+}

@@ -59,7 +59,7 @@ public class VilleAPIController {
         try {
             vs.editVille(id, v);
         } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ville introuvable");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ville Introuvable");
         } catch (InvalidObjectException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

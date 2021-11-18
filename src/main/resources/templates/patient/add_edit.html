@@ -6,8 +6,12 @@
 
 <main class="container">
     <h1 th:if="${ patient.id == 0 }">Ajouter un patient</h1>
-    <h1 th:if="${ patient.id > 0 }">Editer un patient</h1>
+    <h1 th:if="${ patient.id != 0 }">Editer un patient</h1>
     <hr>
+
+    <div class="alert alert-danger" role="alert" th:if="${error != null && error.length() > 0}" th:text="${error}">
+    </div>
+
     <form name="monForm" action="" method="post">
         <div class="form-line mb-4">
             <label class="form-label">Nom *</label>
@@ -35,7 +39,7 @@
 
         <div class="form-line mb-4">
             <label class="form-label">Téléphone *</label>
-            <input class="form-control" type="text" name="telephone" placeholder="Votre numéro de téléphone" required th:value="${patient.telephone}">
+            <input class="form-control" minlength="8" type="text" name="telephone" placeholder="Votre numéro de téléphone" required th:value="${patient.telephone}">
         </div>
 
 

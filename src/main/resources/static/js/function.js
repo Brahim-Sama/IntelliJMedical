@@ -16,3 +16,11 @@ function load(){
         })
         .catch(error => alert("Erreur : " + error));
 }
+
+setTimeout(function(){
+    if( document.getElementById("errMessage") != null )
+        document.getElementById("errMessage").style.display = 'none';
+
+    if( document.getElementById("succMessage") != null )
+        document.getElementById("succMessage").style.display = 'none'
+}, 5000);

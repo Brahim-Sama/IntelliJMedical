@@ -1,14 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="fr" >
+<html xmlns:th="https://www.thymeleaf.org" lang="fr">
 <head class="mb-5" th:include="~{ fragments/head::#head }"></head>
 <body>
 
 <header class="mb-5" th:include="~{ fragments/header::#header }"></header>
 
 <main class="container">
+
     <h1>Liste des patients</h1>
 
-    <a href="/patient/add" class="btn btn-primary">Ajouter un patient</a>
+    <form method="get" action="/patient">
+        <div class="row my-4">
+            <div class="col-4">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" th:value="${search}" name="search" placeholder="Rechercher" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+            </div>
+            <div class="col-4">
+                <a href="/patient/add" class="btn btn-primary">Ajouter un patient</a>
+            </div>
+        </div>
+    </form>
+
+
 
     <table class="table table-striped">
         <thead>
@@ -30,8 +48,10 @@
             <td th:text="${ patient.telephone }"></td>
             <td th:text="${ patient.ville?.nom } +'  - ' + ${ patient.ville?.pays }"></td>
             <td>
-                <a class="btn btn-secondary btn-sm" th:href="@{'/patient/edit/' + ${ patient.id } }"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                <button class="btn btn-danger btn-sm"  th:onclick="|supprimer( 'patient' , ${patient.id} )|"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                <a class="btn btn-secondary btn-sm" th:href="@{'/patient/edit/' + ${ patient.id } }"><i
+                        class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                <button class="btn btn-danger btn-sm" th:onclick="|supprimer( 'patient' , ${patient.id} )|"><i
+                        class="fa fa-trash-o" aria-hidden="true"></i></button>
             </td>
         </tr>
         </tbody>

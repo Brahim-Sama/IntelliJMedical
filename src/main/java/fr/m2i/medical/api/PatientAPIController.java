@@ -1,6 +1,7 @@
 package fr.m2i.medical.api;
 
 import fr.m2i.medical.entities.PatientEntity;
+import fr.m2i.medical.entities.VilleEntity;
 import fr.m2i.medical.service.PatientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,9 +37,15 @@ public class PatientAPIController {
             return ResponseEntity.notFound().build();
         }
     }
-
+// Suppression
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> delete(@PathVariable int id) {
+        // Check sur l'existance de la ville, si ko => 404 not found
+        try {
+            PatientEntity p = ps.findPatient(id);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
         try {
             ps.delete(id);
             return ResponseEntity.ok(null);
@@ -46,7 +53,7 @@ public class PatientAPIController {
             return ResponseEntity.notFound().build();
         }
     }
-
+// Ajout
     @PostMapping(value = "", consumes = "application/json")
     public ResponseEntity<PatientEntity> add(@RequestBody PatientEntity p) {
         try {
@@ -59,7 +66,7 @@ public class PatientAPIController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
-
+//modification
     @PutMapping(value = "/{id}", consumes = "application/json")
     public void update(@PathVariable int id, @RequestBody PatientEntity p) {
         try {
