@@ -19,9 +19,24 @@
                 </ul>
             </div>
         </div>
+
+        <div id="user-welcome">
+            Bienvenue ***
+        </div>
+
+        <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/images/profil.jpg" class="img-circle">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Profil</a></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
     </nav>
 
-    Bienvenue
+
 
     <div class="alert alert-danger" role="alert" th:if="${param.error}" th:text="${param.error}" id="errMessage">
     </div>

@@ -8,3 +8,16 @@ body {
     left: 35%;
     text-align: center;
 }
+
+.dropdown img {
+    max-width: 66px;
+    border-radius: 50%;
+}
+
+.dropdown * {
+    border: 0 none;
+}
+
+#user-welcome{
+    width: 300px;
+}

@@ -17,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Check si le user existe en bd
-        UserEntity user = userRepository.findByUsername(username);
+        UserEntity user = userRepository.findByUsernameOrEmail(username, username);
 
         if(user == null) {
             throw new UsernameNotFoundException("No user named " + username);

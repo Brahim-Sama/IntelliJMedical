@@ -49,6 +49,18 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+        //super.configure(http);
+
+        // utiliser un form de login - login url = /login
+        http.formLogin().loginPage("/login").defaultSuccessUrl("/");
+
+        http.authorizeRequests().antMatchers("/login" , "/css/**" , "/images/**" , "/js/**").permitAll();
+
+        // Tous les actions post pourront être exécutés par les admin
+        http.authorizeRequests().antMatchers("**/add" , "**/edit/**", "**/delete/**").hasRole("ADMIN");
+
+        http.authorizeRequests().anyRequest().authenticated();
+
+        http.csrf().disable();
     }
 }
