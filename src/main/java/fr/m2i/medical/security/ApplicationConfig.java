@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
@@ -16,6 +17,10 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true)
 public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -56,7 +61,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/login" , "/css/**" , "/images/**" , "/js/**").permitAll();
 
-        // Tous les actions post pourront être exécutés par les admin
+        // Tous les actions post pourront être exécutés par les admin : plus d'erreur 403 en post
         http.authorizeRequests().antMatchers("**/add" , "**/edit/**", "**/delete/**").hasRole("ADMIN");
 
         http.authorizeRequests().anyRequest().authenticated();
