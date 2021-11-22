@@ -54,4 +54,9 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public UserEntity getUser(){
+        return user;
+    }
+
 }

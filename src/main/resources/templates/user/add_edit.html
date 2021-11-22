@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="fr">
+<head class="mb-5" th:include="~{ fragments/head::#head }"></head>
+<body>
+<header class="mb-5" th:include="~{ fragments/header::#header }"></header>
+
+<main class="container">
+    <h1 th:if="${ user.id == 0 }">Ajouter un utilisateur</h1>
+    <h1 th:if="${ user.id != 0 }">Editer un utilisateur</h1>
+    <hr>
+
+    <form name="monForm" action="" method="post">
+        <div class="form-line mb-4">
+            <label class="form-label">Nom complet *</label>
+            <input class="form-control" type="text" name="name" placeholder="Votre nom" required>
+        </div>
+
+        <div class="form-line mb-4">
+            <label class="form-label">Email *</label>
+            <input class="form-control" type="text" name="email" placeholder="Votre email" required>
+        </div>
+
+        <div class="form-line mb-4">
+            <label class="form-label">Rôle *</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="usertype" id="inlineRadio1" value="ROLE_ADMIN">
+                <label class="form-check-label" for="inlineRadio1">Administrateur</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="usertype" id="inlineRadio2" value="ROLE_USER">
+                <label class="form-check-label" for="inlineRadio2">Simple utilisateur</label>
+            </div>
+        </div>
+
+        <div class="form-line mb-4">
+            <label class="form-label">Nom d'utilisateur *</label>
+            <input class="form-control" type="text" name="username" placeholder="Votre nom d'utilisateur" required>
+        </div>
+
+        <div class="form-line mb-4">
+            <label class="form-label">Mot de passe *</label>
+            <input class="form-control" type="text" name="password" placeholder="Votre mot de passe" required>
+        </div>
+
+        <div class="form-line mb-4">
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </div>
+
+    </form>
+
+</main>
+
+<footer th:include="~{ fragments/footer::#footer }"></footer>
+
+</body>
+</html>

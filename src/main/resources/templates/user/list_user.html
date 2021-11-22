@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="fr">
+<head class="mb-5" th:include="~{ fragments/head::#head }"></head>
+<body>
+
+<header class="mb-5" th:include="~{ fragments/header::#header }"></header>
+
+<main class="container">
+
+    <h1>Liste des utilisateurs</h1>
+
+    <a href="/user/add" class="btn btn-primary">Ajouter un utilisateur</a>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom complet</th>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="user : ${ users }">
+            <td th:text="${ user.id }"></td>
+            <td th:text="${ user.name }"></td>
+            <td th:text="${ user.username }"></td>
+            <td th:text="${ user.email }"></td>
+            <td th:text="${ user.roles == 'ROLE_ADMIN' } ? 'Administrateur' : 'Utilisateur'"></td>
+            <td>
+                <a class="btn btn-secondary btn-sm" th:href="@{'/user/edit/' + ${ user.id } }"><i
+                        class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                <button class="btn btn-danger btn-sm" th:onclick="|supprimer( 'user' , ${user.id} )|"><i
+                        class="fa fa-trash-o" aria-hidden="true"></i></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:include="~{ fragments/footer::#footer }"></footer>
+
+</body>
+</html>

@@ -5,52 +5,44 @@
 <header class="mb-5" th:include="~{ fragments/header::#header }"></header>
 
 <main class="container">
-    <h1 th:if="${ patient.id == 0 }">Ajouter un patient</h1>
-    <h1 th:if="${ patient.id != 0 }">Editer un patient</h1>
+    <h1 th:if="${ user.id == 0 }">Ajouter un utilisateur</h1>
+    <h1 th:if="${ user.id != 0 }">Editer un utilisateur</h1>
     <hr>
 
-    <div class="alert alert-danger" role="alert" th:if="${error != null && error.length() > 0}" th:text="${error}">
-    </div>
-
     <form name="monForm" action="" method="post">
-        <div class="form-line mb-4">
-            <label class="form-label">Nom *</label>
-            <input class="form-control" type="text" name="nom" placeholder="Votre nom" required th:value="${patient.nom}">
-        </div>
-        <div class="form-line mb-4">
-            <label>Prénom *</label>
-            <input class="form-control" type="text" name="prenom" placeholder="Votre prénom" required th:value="${patient.prenom}">
-        </div>
+        <div id="userForm">
 
-        <div class="form-line mb-4">
-            <label class="form-label">Date de naissance *</label>
-            <input class="form-control" type="date" name="naissance" placeholder="dd/mm/yyyy" required th:value="${patient.dateNaissance}">
-        </div>
+            <div class="form-line mb-4">
+                <label class="form-label">Nom complet *</label>
+                <input class="form-control" type="text" name="tata" placeholder="Votre nom" required th:value="${user.name}">
+            </div>
 
-        <div class="form-line mb-4">
-            <label class="form-label">Adresse *</label>
-            <input class="form-control" type="text" name="adresse" placeholder="Votre adresse" required th:value="${patient.adresse}">
-        </div>
+            <div class="form-line mb-4">
+                <label class="form-label">Email *</label>
+                <input class="form-control" type="text" name="email" placeholder="Votre email" required th:value="${user.email}">
+            </div>
 
-        <div class="form-line mb-4">
-            <label class="form-label">Email *</label>
-            <input class="form-control" type="email" name="email" placeholder="Votre email" required th:value="${patient.email}">
-        </div>
+            <div class="form-line mb-4">
+                <label class="form-label">Nom d'utilisateur *</label>
+                <input class="form-control" type="text" name="username" placeholder="Votre nom d'utilisateur" required th:value="${user.username}">
+            </div>
 
-        <div class="form-line mb-4">
-            <label class="form-label">Téléphone *</label>
-            <input class="form-control" minlength="8" type="text" name="telephone" placeholder="Votre numéro de téléphone" required th:value="${patient.telephone}">
+            <div class="form-line mb-4">
+                <label class="form-label">Mot de passe *</label>
+                <input class="form-control" type="password" name="password" placeholder="Votre mot de passe"  >
+            </div>
+
         </div>
 
-
         <div class="form-line mb-4">
-            <label class="form-label">Ville *</label>
-            <div id="cities-content">
-                <select class="form-select" name="ville" required id="ville">
-                    <option value="">Sélectionner une ville</option>
-                    <option th:each="ville : ${villes}" th:value="${ville.id}"
-                            th:utext="${ville.nom}" th:selected="${ ville.id == patient.ville?.id }" ></option>
-                </select>
+            <label class="form-label">Rôle *</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="inlineRadio1" value="ROLE_ADMIN" th:field="${user.roles}">
+                <label class="form-check-label" for="inlineRadio1">Administrateur</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="inlineRadio2" value="ROLE_USER" th:field="${user.roles}">
+                <label class="form-check-label" for="inlineRadio2">Simple utilisateur</label>
             </div>
         </div>
 
