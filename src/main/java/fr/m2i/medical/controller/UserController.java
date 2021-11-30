@@ -3,6 +3,8 @@ package fr.m2i.medical.controller;
 import fr.m2i.medical.entities.PatientEntity;
 import fr.m2i.medical.entities.UserEntity;
 import fr.m2i.medical.entities.VilleEntity;
+import fr.m2i.medical.service.StorageService;
+import fr.m2i.medical.service.StorageServiceImpl;
 import fr.m2i.medical.service.UserService;
 import org.aspectj.weaver.Iterators;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -21,6 +25,9 @@ import java.util.NoSuchElementException;
 @RequestMapping("/user")
 @Secured("ROLE_ADMIN")
 public class UserController {
+
+    @Autowired
+    private StorageServiceImpl storageService;
 
     @Autowired
     private UserService uservice;
@@ -115,16 +122,18 @@ public class UserController {
 
     @PostMapping(value = "/profil/{id}")
     @Secured({"ROLE_ADMIN", "ROLE_USER" })
-    public String editProfil( @PathVariable int id , HttpServletRequest request ){
+    public String editProfil( @PathVariable int id , HttpServletRequest request , @RequestParam("photoProfil") MultipartFile file ) throws IOException {
         // Récupération des paramètres envoyés en POST
         String titi = request.getParameter("tata");
         String email = request.getParameter("email");
         String usertype = request.getParameter("roles");
         String username = request.getParameter("username");
 
+        String photo = storageService.store(file , "src\\main\\resources\\static\\images\\uploads");
+
         // String username, String email, String roles, String password, String name
         // Préparation de l'entité à sauvegarderpassword
-        UserEntity u = new UserEntity( username, email, usertype, "", titi );
+        UserEntity u = new UserEntity( username, email, usertype, "", titi , photo);
         u.setId( id );
 
         // Enregistrement en utilisant la couche service qui gère déjà nos contraintes

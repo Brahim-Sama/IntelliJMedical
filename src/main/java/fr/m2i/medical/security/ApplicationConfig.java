@@ -3,12 +3,14 @@ package fr.m2i.medical.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,48 +26,53 @@ import javax.sql.DataSource;
 public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource dsource;
-
-    @Autowired
     private UserDetailsService userDetailsService;
 
+
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //super.configure(auth);
-
-        // Solution 1 : auth.inMemoryAuthentication().withUser("admin").password("{noop}1234").roles("ADMIN");
-
-        //System.out.println( passwordEncoder().encode("1234") );
-
-        // Solution 2
-        // 1. récupère l'utilisateur, 2.vérifie le pass en utilisant l'encodeur
-        /*auth.jdbcAuthentication().dataSource( dsource )
-                .usersByUsernameQuery( "SELECT username, password, 1 enabled FROM user WHERE username = ?" )
-                .authoritiesByUsernameQuery( "SELECT username, roles FROM user WHERE username = ?" )
-                .passwordEncoder( passwordEncoder() ); */
-
+    protected void configure( AuthenticationManagerBuilder auth  ) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder( passwordEncoder() );
     }
+
+    @Configuration
+    @Order(1)
+    public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+        protected void configure(HttpSecurity http) throws Exception {
+            http.cors().and()
+                    .antMatcher("/api/**")
+                    .csrf()
+                    .disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // On utilise pas les sessions, toute req est déconnectée suite à l'exécution
+                    .and().authorizeRequests(authorize -> authorize
+                            .anyRequest().hasRole("ADMIN")
+                    )
+                    .httpBasic();
+        }
+    }
+
+    @Configuration
+    @Order(2)
+    public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            //formLogin = utiliser un formulaire d'authetification - loginPage : chemin de l'authentification
+            http.formLogin().loginPage("/login").defaultSuccessUrl("/");
+            // Autoriser un accès anonyme sur les routes /login et /css/**
+            http.authorizeRequests().antMatchers("/login" , "/css/**" ).permitAll();
+            // Autoriser les actions post pour les admins : ROLE_ADMIN
+            http.authorizeRequests().antMatchers("**/add" , "**/edit/**" , "**/delete/**").hasRole("ADMIN");
+
+            // Tous les utilisateurs qui ne sont pas mentionnées en haut devrait s'authentifier
+            http.authorizeRequests().anyRequest().authenticated();
+
+            // désactiver la protection csrf
+            http.csrf().disable();
+        }
+    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        //super.configure(http);
-
-        // utiliser un form de login - login url = /login
-        http.formLogin().loginPage("/login").defaultSuccessUrl("/");
-
-        http.authorizeRequests().antMatchers("/login" , "/css/**" , "/images/**" , "/js/**").permitAll();
-
-        // Tous les actions post pourront être exécutés par les admin : plus d'erreur 403 en post
-        http.authorizeRequests().antMatchers("**/add" , "**/edit/**", "**/delete/**").hasRole("ADMIN");
-
-        http.authorizeRequests().anyRequest().authenticated();
-
-        http.csrf().disable();
     }
 }

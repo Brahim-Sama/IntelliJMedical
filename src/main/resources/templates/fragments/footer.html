@@ -19,10 +19,10 @@
                     <h5 class="modal-title" id="staticBackdropLabel">Editer mon profil</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form name="" method="post" th:action="@{'/user/profil/' + ${#authentication.getPrincipal().getUser().getId()}}">
-                    <div class="modal-body" th:with="u=${#authentication.getPrincipal().getUser()}">
+                <form name="" method="post" >
+                    <div class="modal-body" >
 
-                        <div class="mb-5" th:include="~{ user/add_edit::#userForm( user = ${u} ) }"></div>
+                        <div class="mb-5" ></div>
 
                         <div class="form-line mb-4">
                             <label class="form-label">Photo de profil*</label>

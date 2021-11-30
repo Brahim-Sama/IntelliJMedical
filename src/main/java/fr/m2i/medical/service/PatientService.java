@@ -8,6 +8,7 @@ import fr.m2i.medical.repositories.VilleRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.InvalidObjectException;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.regex.Matcher;

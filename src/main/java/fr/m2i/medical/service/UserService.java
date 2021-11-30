@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InvalidObjectException;
 import java.util.NoSuchElementException;
@@ -32,7 +33,11 @@ public class UserService {
     }
 
     public void addUser(UserEntity u) {
-        u.setPassword( encoder.encode( u.getPassword() ) );
+        u.setPassword(encoder.encode(u.getPassword()));
+
+        if( u.getPhotouser().length() == 0)
+            u.setPhotouser( "default.jpg" );
+
         ur.save(u);
     }
 
@@ -41,6 +46,7 @@ public class UserService {
     }
 
     public void editUser( int id , UserEntity u) throws NoSuchElementException {
+
         try{
             UserEntity uExistant = ur.findById(id).get();
 
@@ -52,6 +58,11 @@ public class UserService {
             if( u.getPassword().length() > 0 ){
                 uExistant.setPassword( encoder.encode( u.getPassword() ) );
             }
+
+            if( u.getPhotouser().length() == 0)
+                uExistant.setPhotouser( "default.jpg" );
+            else
+                uExistant.setPhotouser( u.getPhotouser() );
 
             ur.save( uExistant );
 
@@ -67,6 +78,15 @@ public class UserService {
             uExistant.setEmail( u.getEmail() );
             uExistant.setName( u.getName() );
             uExistant.setUsername( u.getUsername() );
+
+            System.out.println( "------------------" );
+            System.out.println( u.getPhotouser() );
+            System.out.println( "*************" );
+
+            if( u.getPhotouser() == null )
+                uExistant.setPhotouser( "default.jpg" );
+            else
+                uExistant.setPhotouser( u.getPhotouser() );
 
             ur.save( uExistant );
 

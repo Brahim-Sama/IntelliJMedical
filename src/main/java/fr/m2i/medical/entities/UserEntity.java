@@ -14,12 +14,31 @@ public class UserEntity {
     private String name;
     private String photouser;
 
+    public UserEntity() {
+    }
+
+    public UserEntity(String username, String email, String roles, String password, String name) {
+        this.username = username;
+        this.email = email;
+        this.roles = roles;
+        this.password = password;
+        this.name = name;
+    }
+
+    public UserEntity(String username, String email, String roles, String password, String name , String photouser) {
+        this.username = username;
+        this.email = email;
+        this.roles = roles;
+        this.password = password;
+        this.name = name;
+        this.photouser = photouser;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -46,7 +65,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "roles", nullable = false, length = -1)
+    @Column(name = "roles", nullable = false, length = 100)
     public String getRoles() {
         return roles;
     }
@@ -97,19 +116,4 @@ public class UserEntity {
     public int hashCode() {
         return Objects.hash(id, username, email, roles, password, name, photouser);
     }
-
-
-    public UserEntity( String username, String email, String roles, String password, String name) {
-        this.username = username;
-        this.email = email;
-        this.roles = roles;
-        this.password = password;
-        this.name = name;
-    }
-
-    public UserEntity(){
-
-    }
 }
-
-
